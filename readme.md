@@ -21,9 +21,9 @@ riot.js用のボイラープレート的な何かです。gulpで一通りのビ
 （但し、ここに書いてある範囲の使い方であれば、恐らくは不要です）
 
 * babel-core@6.23.1
-    ** $ npm install -g babel-core
+    * $ npm install -g babel-core
 * gulp@3.9.1
-    ** $ npm install -g gulp
+    * $ npm install -g gulp
 
 
 ## 開発の進め方
