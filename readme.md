@@ -12,7 +12,7 @@ riot.js用のボイラープレート的な何かです。gulpで一通りのビ
 ## 始め方
 
 1. $ npm install （初回のみ）
-1. npm run watch
+1. $ npm run watch
 
 →ブラウザが立ち上がってサンプルが表示されます。
 終了する時はCtl-Cで。
@@ -37,6 +37,8 @@ riot.js用のボイラープレート的な何かです。gulpで一通りのビ
 
 ## 開発モデル
 
+* 大体の部分で下の記事に倣っています。多謝。
+    * [モダンJavaScript開発 はじめの一歩, Riot.jsの場合]( http://blog.lebe.jp/post/150338847590/modern-javascript-riotjs )
 * グローバルの汚染を防ぐため、タグ以外のアプリのロジックは全てwindow.Appに入れます
     * index.jsを参照してください。この中はES2015が書けるので、importが使えます
 * データの管理にはRiotControllを利用したゆるいFlux的なモデルを組み込んでいます
