@@ -72,7 +72,7 @@ riot.js用のボイラープレート的な何かです。gulpで一通りのビ
 ## FQA
 
 * jQuery使いたいんだけど
-    * nmp install --sava jquery とかで入れてください
+    * npm install --sava jquery とかで入れてください
     * タグから使いたい場合は、index.jsでriot.jsと同じ要領でwindow直下にエクスポートしてください
     * ↑の手順がめんどくさければ、index.htmlでCDNから引っ張ってくるのでもOKです
 * ブラウザ同期がいつのまにか死んでるんだけど
