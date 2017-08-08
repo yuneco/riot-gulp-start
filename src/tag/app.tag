@@ -6,15 +6,15 @@
     </div>
     <content></content>
 
-
-    goGreeting(e){
+<script>
+    this.goGreeting = (e)=>{
         console.log('goGreeting');
         window.location="#"
     }
-    goUsers(e){
+    this.goUsers = (e)=>{
         console.log('goUsers');
         window.location="#users"
     }
-
+</script>
 
 </app>

@@ -4,6 +4,7 @@ import sass from 'gulp-sass';
 import riot from 'gulp-riot';
 import concat from 'gulp-concat';
 import babel from 'gulp-babel';
+import uglify from 'gulp-uglify';
 import sourcemaps from 'gulp-sourcemaps';
 import browserSync from 'browser-sync';
 import plumber from 'gulp-plumber';
@@ -37,20 +38,6 @@ gulp.task('cpHtml', function () {
         .pipe(gulp.dest('dist'));
 });
 
-// js（riotタグ以外）をコンパイル・結合します
-// ES2015で書けます
-// 出力 : dist/js/main.js
-// gulp.task('script', () =>
-//     gulp.src('./src/js/**/*.js')
-//         .pipe(plumber({
-//             errorHandler: notify.onError("Error on compiling script : <%= error.message %>")
-//         }))
-//         .pipe(sourcemaps.init())
-//         .pipe(babel())
-//         .pipe(concat("main.js"))
-//         .pipe(sourcemaps.write('./'))
-//         .pipe(gulp.dest('./dist/js'))
-// );
 gulp.task('script', ()=> {
 
     browserify({ entries: ['src/js/index.js'] ,debug: true})
@@ -64,6 +51,7 @@ gulp.task('script', ()=> {
     .pipe(source('main.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('dist/js/'))
 })
@@ -92,19 +80,30 @@ gulp.task('riot', () => {
         .pipe(plumber({
             errorHandler: notify.onError("Error on compiling riot tag : <%= error.message %>")
         }))
-        .pipe(riot())
+        .pipe(riot({
+            type: 'es6',
+            compact : true,
+            parserOptions: {
+                js: {
+                    babelrc: false,
+                    presets: ['es2015-riot'],
+                    plugins: ['add-module-exports', 'transform-runtime'],
+                }
+            }
+        }))
         .pipe(sourcemaps.init())
         .pipe(concat("tags.js"))
+        .pipe(uglify())
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('dist/js/'))
 })
 
 //自動監視のタスク
 gulp.task('watch', () => {
-    gulp.watch('./src/css/**/*.scss', ['sass']);
-    gulp.watch('./src/js/**/*.js', ['script']);
-    gulp.watch('./src/tag/**/*.tag', ['riot']);
-    gulp.watch('./src/*.html', ['cpHtml']);
+    gulp.watch('src/css/**/*.scss', ['sass']);
+    gulp.watch('src/js/**/*.js', ['script']);
+    gulp.watch('src/tag/**/*.tag', ['riot']);
+    gulp.watch('src/*.html', ['cpHtml']);
 
 });
 
@@ -116,7 +115,7 @@ gulp.task("browserSync", () => {
         }
     });
     // ファイルの監視 : 以下のファイルが変わったらリロード処理を呼び出す
-    gulp.watch("./dist/**/*", ["reload"]);
+    gulp.watch("dist/**/*", ["reload"]);
 });
 gulp.task("reload", () => {
     browserSync.reload();

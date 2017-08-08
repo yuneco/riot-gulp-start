@@ -2,10 +2,10 @@
     Hello! <riot-logo></riot-logo>
     <button onclick={ hey }>hey riot!!</button>
 
-
-    hey(e) {
+<script>
+    this.hey = (e)=>{
         App.hello();
     }
-
+</script>
 
 </greeting>
